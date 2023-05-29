@@ -1,0 +1,28 @@
+version: "3.3"
+
+services:
+  frontend:
+    build: ./magnet-manager
+    ports:
+      - 3100:3000
+    volumes:
+      - ./magnet-manager/src:/app/src
+      # - ./magnet-manager/.env:/app/.env
+    # env_file: "./DataChannelFrontendV2/.env"
+    networks:
+      - magnet-mgr-net
+  backend:
+    build:
+      context: "./backend"
+    cpus: 1
+    ports:
+      - '5400:5000'
+    volumes:
+      - "./backend:/app"
+    # env_file: "./DataChannelMetaAPI/.env"
+    networks:
+     - magnet-mgr-net
+
+networks:
+  magnet-mgr-net:
+    driver: bridge
